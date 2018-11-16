@@ -34,13 +34,13 @@ public class WholeProgramTransformer extends SceneTransformer {
 				int allocId = 0;
 				if (sm.hasActiveBody()) {
 					for (Unit u : sm.getActiveBody().getUnits()) {
-//						if(sm.toString().contains("FieldSensitivity")){
-//							System.out.println("S: "+u.toString());
-//						}
+						/*if(sm.toString().contains("FieldSensitivity")){
+							System.out.println("S: "+u.toString());
+						}*/
 						if (u instanceof InvokeStmt) {
-							/*if(sm.toString().contains("FieldSensitivity")){
-								System.out.println("S: "+u.toString());
-							}*/
+							if(sm.toString().contains("FieldSensitivity")){
+								System.out.println("--invoke ---"+"S: "+u.toString()+"--------------");
+							}
 							InvokeExpr ie = ((InvokeStmt) u).getInvokeExpr();
 							if (ie.getMethod().toString().equals("<benchmark.internal.Benchmark: void alloc(int)>")) {
 								allocId = ((IntConstant)ie.getArgs().get(0)).value;
@@ -55,15 +55,25 @@ public class WholeProgramTransformer extends SceneTransformer {
 
 							if (((DefinitionStmt)u).getRightOp() instanceof NewExpr) {
 								//System.out.println("Alloc " + allocId);
+								if(sm.toString().contains("FieldSensitivity")){
+									System.out.println("====new assign====="+"S: "+((DefinitionStmt) u).toString() + "==================");
+									//System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
+								}
 								anderson.addNewConstraint(allocId, (Local)((DefinitionStmt) u).getLeftOp());
 							}
 							if (((DefinitionStmt)u).getLeftOp() instanceof Local && ((DefinitionStmt)u).getRightOp() instanceof Local) {
+								if(sm.toString().contains("FieldSensitivity")){
+									System.out.println("==local assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
+									//System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
+								}
 								anderson.addAssignConstraint((Local)((DefinitionStmt) u).getRightOp(), (Local)((DefinitionStmt) u).getLeftOp());
 							}
 
 							if (((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef) {
 								if(sm.toString().contains("FieldSensitivity")){
-									System.out.println("S: "+u.toString() + "true");
+									System.out.println("method name:"+sm.toString());
+									System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
+									System.out.println("=====instanceField===="+((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()).toString() +"======");
 									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
 								}
 							}
