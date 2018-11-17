@@ -69,12 +69,13 @@ public class WholeProgramTransformer extends SceneTransformer {
 								anderson.addAssignConstraint((Local)((DefinitionStmt) u).getRightOp(), (Local)((DefinitionStmt) u).getLeftOp());
 							}
 
-							if (((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef) {
+							if ( ((DefinitionStmt) u).getLeftOp() instanceof Local && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef) {
 								if(sm.toString().contains("FieldSensitivity")){
 									System.out.println("method name:"+sm.toString());
 									System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
 									System.out.println("=====instanceField===="+((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()).toString() +"======");
 									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
+									anderson.addAssignConstraint(((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()), (Local)((DefinitionStmt) u).getLeftOp());
 								}
 							}
 						}
