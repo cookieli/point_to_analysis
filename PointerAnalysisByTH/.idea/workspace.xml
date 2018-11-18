@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7234837a-8a60-4455-b49c-43d1864b6a83" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/core/Anderson.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/Anderson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/result.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/Anderson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Anderson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../result.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../code/test/FieldSensitivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/FieldSensitivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../code/test/Hello.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/Hello.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,32 +42,34 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="863" />
+          <entry key="JAVA" value="2433" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="863" />
+          <entry key="java" value="2433" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="163">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
               <folding>
                 <element signature="e#718#736#0" expanded="true" />
                 <element signature="e#802#817#0" expanded="true" />
-                <element signature="e#954#979#0" expanded="true" />
+                <element signature="e#1117#1142#0" expanded="true" />
                 <element signature="e#1031#1032#0" expanded="true" />
                 <element signature="e#1094#1095#0" expanded="true" />
-                <element signature="e#1276#1277#0" expanded="true" />
-                <element signature="e#1336#1337#0" expanded="true" />
+                <element signature="e#1390#1391#0" expanded="true" />
+                <element signature="e#1413#1414#0" expanded="true" />
+                <element signature="e#1441#1442#0" expanded="true" />
+                <element signature="e#1451#1452#0" expanded="true" />
                 <element signature="e#1954#1955#0" expanded="true" />
                 <element signature="e#1982#1983#0" expanded="true" />
               </folding>
@@ -93,16 +99,16 @@
         <entry file="file://$PROJECT_DIR$/sootOutput/test.Hello.jimple">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+              <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1653">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="380">
+              <caret line="88" column="75" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -248,7 +254,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32901832" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32864866" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -319,7 +325,7 @@
     <entry file="file://$PROJECT_DIR$/sootOutput/test.Hello.jimple">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -337,28 +343,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1653">
-          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        <state relative-caret-position="163">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="e#718#736#0" expanded="true" />
             <element signature="e#802#817#0" expanded="true" />
-            <element signature="e#954#979#0" expanded="true" />
+            <element signature="e#1117#1142#0" expanded="true" />
             <element signature="e#1031#1032#0" expanded="true" />
             <element signature="e#1094#1095#0" expanded="true" />
-            <element signature="e#1276#1277#0" expanded="true" />
-            <element signature="e#1336#1337#0" expanded="true" />
+            <element signature="e#1390#1391#0" expanded="true" />
+            <element signature="e#1413#1414#0" expanded="true" />
+            <element signature="e#1441#1442#0" expanded="true" />
+            <element signature="e#1451#1452#0" expanded="true" />
             <element signature="e#1954#1955#0" expanded="true" />
             <element signature="e#1982#1983#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="88" column="75" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
         </state>
       </provider>
     </entry>

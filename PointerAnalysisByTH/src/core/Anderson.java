@@ -38,14 +38,29 @@ public class Anderson {
 	private List<AssignConstraint> assignConstraintList = new ArrayList<AssignConstraint>();
 	private List<NewConstraint> newConstraintList = new ArrayList<NewConstraint>();
 	//private List<FieldAssignConstraint> FieldAssignConstraintList = new ArrayList<>();
+	public List<Local> assignParameters = new ArrayList<>();
+	Map<Local, Local> assignLocalToReal = new HashMap<>();
+	Map<Local, Local> tempToLocal = new HashMap<>();
+	//some data structure about assign method
+    //now we need data structure to init method
+
 	Map<Local, TreeSet<Integer>> pts = new HashMap<Local, TreeSet<Integer>>();
 	void addAssignConstraint(Local from, Local to) {
 		assignConstraintList.add(new AssignConstraint(from, to));
 	}
 	//void addFieldAssignConstraint(InstanceFieldRef from, Local to) {FieldAssignConstraintList.add(new FieldAssignConstraint(from, to));}
-	void addNewConstraint(int alloc, Local to) {
-		newConstraintList.add(new NewConstraint(alloc, to));		
+	void addNewConstraint(int alloc, Local to){
+		newConstraintList.add(new NewConstraint(alloc, to));
 	}
+	void mapParametersWithReal(Local local, int parameter_id){
+		assignLocalToReal.put(local, assignParameters.get(parameter_id));
+	}
+	void setAssignParameters(Local parameter){
+		this.assignParameters.add(parameter);
+	}
+
+
+
 	void run() {
 		for (NewConstraint nc : newConstraintList) {
 			if (!pts.containsKey(nc.to)) {

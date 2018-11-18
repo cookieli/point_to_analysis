@@ -32,16 +32,64 @@ public class WholeProgramTransformer extends SceneTransformer {
 				System.out.println(sm);*/
 
 				int allocId = 0;
+				Local new_Local = null;
 				if (sm.hasActiveBody()) {
 					for (Unit u : sm.getActiveBody().getUnits()) {
-						/*if(sm.toString().contains("FieldSensitivity")){
-							System.out.println("S: "+u.toString());
-						}*/
+						if(sm.toString().contains("FieldSensitivity")){
+						//	System.out.println("S: "+u.toString());
+						}
+						if(sm.toString().contains("<benchmark.objects.A: void <init>(benchmark.objects.B)")){
+                         //   System.out.println("---------"+ "init method---" + u.toString());
+                        }
+						if(sm.toString().contains("FieldSensitivity") && sm.toString().contains("assign")){
+							//System.out.println("-------then into assign method body---"+ sm.toString()+"------");
+							//System.out.println("-----unit----"+u.toString()+"--------");
+							if (u instanceof DefinitionStmt){
+                                //System.out.println("------"+u.toString()+"--------");
+                                //System.out.println("========left opr====="+((DefinitionStmt) u).getLeftOp().toString()+"=====");
+                                /*if(((DefinitionStmt) u).getRightOp().toString().contains("@parameter")){
+                                    System.out.println("right opr"+ ((DefinitionStmt) u).getRightOp().toString()+ "=====");
+                                }*/
+                                for(int i = 0; i < anderson.assignParameters.size(); i++){
+                                    if(((DefinitionStmt) u).getRightOp().toString().contains("@parameter" + i)){
+                                        anderson.mapParametersWithReal((Local) ((DefinitionStmt) u).getLeftOp(), i);
+                                    }
+                                }
+                                if(((DefinitionStmt) u).getLeftOp().toString().contains("$") && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef){
+                                    anderson.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase());
+                                }
+                                if(((DefinitionStmt) u).getRightOp().toString().contains("$") && ((DefinitionStmt) u).getLeftOp() instanceof InstanceFieldRef){
+                                    Local temp = anderson.tempToLocal.get((Local) ((DefinitionStmt) u).getRightOp());
+                                    Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
+                                    Local leftTempOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getBase());
+                                    anderson.addAssignConstraint(rightTempOfReal, leftTempOfReal);
+                                }
+                            }
+						}
 						if (u instanceof InvokeStmt) {
 							if(sm.toString().contains("FieldSensitivity")){
 								System.out.println("--invoke ---"+"S: "+u.toString()+"--------------");
+								System.out.println("invoke method-------"+((InvokeStmt) u).getInvokeExpr().getMethod().toString());
+								//InvokeExpr ie = ((InvokeStmt) u).getInvokeExpr();
+								//System.out.println("-----invoke method----"+ ie.getMethod().toString());
 							}
 							InvokeExpr ie = ((InvokeStmt) u).getInvokeExpr();
+                            //System.out.println("-----invoke method----"+ ie.getMethod().toString());
+							if(ie.getMethod().toString().equals("<test.FieldSensitivity: void assign(benchmark.objects.A,benchmark.objects.A)>")){
+								//System.out.println(ie.getArgs().size()+" first into assign ");
+								for(int i = 0; i < ie.getArgs().size(); i++){
+									anderson.setAssignParameters((Local) ie.getArgs().get(i));
+								}
+							}
+                            if(ie.getMethod().toString().equals("<benchmark.objects.A: void <init>(benchmark.objects.B)>")){// it means it's a new method
+                                //System.out.println("it's in new method");
+                                if(ie.getArgs().size() > 0){
+                                    for(int i = 0; i < ie.getArgs().size(); i++){
+                                        //System.out.println("allocId: " + allocId + ie.getArgs().get(i).toString());
+                                        anderson.addAssignConstraint((Local) ie.getArgs().get(i), new_Local);
+                                    }
+                                }
+                            }
 							if (ie.getMethod().toString().equals("<benchmark.internal.Benchmark: void alloc(int)>")) {
 								allocId = ((IntConstant)ie.getArgs().get(0)).value;
 							}
@@ -56,14 +104,15 @@ public class WholeProgramTransformer extends SceneTransformer {
 							if (((DefinitionStmt)u).getRightOp() instanceof NewExpr) {
 								//System.out.println("Alloc " + allocId);
 								if(sm.toString().contains("FieldSensitivity")){
-									System.out.println("====new assign====="+"S: "+((DefinitionStmt) u).toString() + "==================");
+									//System.out.println("====new assign====="+"S: "+((DefinitionStmt) u).toString() + "==================");
 									//System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
 								}
 								anderson.addNewConstraint(allocId, (Local)((DefinitionStmt) u).getLeftOp());
+								new_Local = (Local) ((DefinitionStmt) u).getLeftOp();
 							}
 							if (((DefinitionStmt)u).getLeftOp() instanceof Local && ((DefinitionStmt)u).getRightOp() instanceof Local) {
 								if(sm.toString().contains("FieldSensitivity")){
-									System.out.println("==local assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
+									//System.out.println("==local assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
 									//System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
 								}
 								anderson.addAssignConstraint((Local)((DefinitionStmt) u).getRightOp(), (Local)((DefinitionStmt) u).getLeftOp());
@@ -71,10 +120,10 @@ public class WholeProgramTransformer extends SceneTransformer {
 
 							if ( ((DefinitionStmt) u).getLeftOp() instanceof Local && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef) {
 								if(sm.toString().contains("FieldSensitivity")){
-									System.out.println("method name:"+sm.toString());
+									/*System.out.println("method name:"+sm.toString());
 									System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
 									System.out.println("=====instanceField===="+((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()).toString() +"======");
-									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
+									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());*/
 									anderson.addAssignConstraint(((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()), (Local)((DefinitionStmt) u).getLeftOp());
 								}
 							}

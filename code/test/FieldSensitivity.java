@@ -22,7 +22,7 @@ public class FieldSensitivity {
     y.f = x.f;
   }
 
-  private void test() {	  
+  private void test() {
     Benchmark.alloc(1);
     B b = new B();
     Benchmark.alloc(2);
