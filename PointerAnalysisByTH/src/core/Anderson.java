@@ -1,10 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 import soot.Local;
 import soot.jimple.InstanceFieldRef;
@@ -44,6 +40,7 @@ public class Anderson {
 	//some data structure about assign method
     //now we need data structure to init method
 
+    HashSet<Local> fieldPointTo = new HashSet<>();
 	Map<Local, TreeSet<Integer>> pts = new HashMap<Local, TreeSet<Integer>>();
 	void addAssignConstraint(Local from, Local to) {
 		assignConstraintList.add(new AssignConstraint(from, to));

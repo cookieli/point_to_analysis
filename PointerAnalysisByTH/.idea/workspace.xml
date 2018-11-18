@@ -4,12 +4,12 @@
     <list default="true" id="7234837a-8a60-4455-b49c-43d1864b6a83" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/core/Anderson.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/Anderson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/core/AssignConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/AssignConstraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/core/NewConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/NewConstraint.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/result.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/Anderson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Anderson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/test/FieldSensitivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/FieldSensitivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/test/Hello.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/Hello.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,28 +42,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2433" />
+          <entry key="JAVA" value="2561" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="2433" />
+          <entry key="java" value="2561" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="228">
+              <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
               <folding>
                 <element signature="e#718#736#0" expanded="true" />
                 <element signature="e#802#817#0" expanded="true" />
-                <element signature="e#1117#1142#0" expanded="true" />
+                <element signature="e#1159#1184#0" expanded="true" />
                 <element signature="e#1031#1032#0" expanded="true" />
                 <element signature="e#1094#1095#0" expanded="true" />
                 <element signature="e#1390#1391#0" expanded="true" />
@@ -104,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="88" column="75" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
+            <state relative-caret-position="266">
+              <caret line="134" column="111" selection-start-line="134" selection-start-column="111" selection-end-line="134" selection-end-column="111" />
             </state>
           </provider>
         </entry>
@@ -127,8 +127,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="121" />
-    <option name="y" value="27" />
+    <option name="x" value="807" />
+    <option name="y" value="29" />
     <option name="width" value="962" />
     <option name="height" value="1051" />
   </component>
@@ -202,7 +202,7 @@
     <configuration name="MyPointerAnalysis" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="core.MyPointerAnalysis" />
       <module name="PointerAnalysisByTH" />
-      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../code test.FieldSensitivity" />
+      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../code test.Hello" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="core.*" />
@@ -329,13 +329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/MyPointerAnalysis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/TreeSet.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-599">
@@ -343,14 +336,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="134" column="111" selection-start-line="134" selection-start-column="111" selection-end-line="134" selection-end-column="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/MyPointerAnalysis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="228">
+          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
           <folding>
             <element signature="e#718#736#0" expanded="true" />
             <element signature="e#802#817#0" expanded="true" />
-            <element signature="e#1117#1142#0" expanded="true" />
+            <element signature="e#1159#1184#0" expanded="true" />
             <element signature="e#1031#1032#0" expanded="true" />
             <element signature="e#1094#1095#0" expanded="true" />
             <element signature="e#1390#1391#0" expanded="true" />
@@ -360,13 +367,6 @@
             <element signature="e#1954#1955#0" expanded="true" />
             <element signature="e#1982#1983#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="88" column="75" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
         </state>
       </provider>
     </entry>

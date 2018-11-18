@@ -56,13 +56,17 @@ public class WholeProgramTransformer extends SceneTransformer {
                                     }
                                 }
                                 if(((DefinitionStmt) u).getLeftOp().toString().contains("$") && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef){
-                                    anderson.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase());
+                                    //anderson.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase());
+                                    for(Local e: anderson.fieldPointTo){
+                                        anderson.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), e);
+                                    }
                                 }
                                 if(((DefinitionStmt) u).getRightOp().toString().contains("$") && ((DefinitionStmt) u).getLeftOp() instanceof InstanceFieldRef){
                                     Local temp = anderson.tempToLocal.get((Local) ((DefinitionStmt) u).getRightOp());
                                     Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
-                                    Local leftTempOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getBase());
-                                    anderson.addAssignConstraint(rightTempOfReal, leftTempOfReal);
+                                    //Local leftTempOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getBase());
+                                    //anderson.addAssignConstraint(rightTempOfReal, leftTempOfReal);
+                                    anderson.fieldPointTo.add(rightTempOfReal);
                                 }
                             }
 						}
@@ -86,7 +90,8 @@ public class WholeProgramTransformer extends SceneTransformer {
                                 if(ie.getArgs().size() > 0){
                                     for(int i = 0; i < ie.getArgs().size(); i++){
                                         //System.out.println("allocId: " + allocId + ie.getArgs().get(i).toString());
-                                        anderson.addAssignConstraint((Local) ie.getArgs().get(i), new_Local);
+                                        //anderson.addAssignConstraint((Local) ie.getArgs().get(i), new_Local);
+                                        anderson.fieldPointTo.add((Local) ie.getArgs().get(i));
                                     }
                                 }
                             }
@@ -109,6 +114,7 @@ public class WholeProgramTransformer extends SceneTransformer {
 								}
 								anderson.addNewConstraint(allocId, (Local)((DefinitionStmt) u).getLeftOp());
 								new_Local = (Local) ((DefinitionStmt) u).getLeftOp();
+
 							}
 							if (((DefinitionStmt)u).getLeftOp() instanceof Local && ((DefinitionStmt)u).getRightOp() instanceof Local) {
 								if(sm.toString().contains("FieldSensitivity")){
@@ -124,7 +130,10 @@ public class WholeProgramTransformer extends SceneTransformer {
 									System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
 									System.out.println("=====instanceField===="+((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()).toString() +"======");
 									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());*/
-									anderson.addAssignConstraint(((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()), (Local)((DefinitionStmt) u).getLeftOp());
+									//anderson.addAssignConstraint(((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()), (Local)((DefinitionStmt) u).getLeftOp());
+                                    for(Local e: anderson.fieldPointTo){
+                                        anderson.addAssignConstraint(e, (Local)((DefinitionStmt) u).getLeftOp());
+                                    }
 								}
 							}
 						}
