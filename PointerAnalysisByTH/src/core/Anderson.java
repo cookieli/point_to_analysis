@@ -40,6 +40,7 @@ public class Anderson {
 	//some data structure about assign method
     //now we need data structure to init method
 
+    Map<Local, HashSet<Local>> classWithField = new HashMap<>();
     HashSet<Local> fieldPointTo = new HashSet<>();
 	Map<Local, TreeSet<Integer>> pts = new HashMap<Local, TreeSet<Integer>>();
 	void addAssignConstraint(Local from, Local to) {
