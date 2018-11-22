@@ -36,7 +36,8 @@ public class Anderson {
 	//private List<FieldAssignConstraint> FieldAssignConstraintList = new ArrayList<>();
 	public List<Local> assignParameters = new ArrayList<>();
 	Map<Local, Local> assignLocalToReal = new HashMap<>();
-	Map<Local, Local> tempToLocal = new HashMap<>();
+	//Map<Local, Local> tempToLocal = new HashMap<>();
+    Map<Local, HashSet<Local>> tempToLocal = new HashMap<>();
 	//some data structure about assign method
     //now we need data structure to init method
 
