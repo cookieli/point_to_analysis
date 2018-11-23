@@ -96,7 +96,7 @@ public class WholeProgramTransformer extends SceneTransformer {
                         }
                         InvokeExpr ie = ((InvokeStmt) u).getInvokeExpr();
                         //System.out.println("-----invoke method----"+ ie.getMethod().toString());
-                        if (ie instanceof SpecialInvokeExpr && ie.getMethod().toString().contains("init") && ie.getMethod().toString().contains("FieldSensitivity")) {
+                        if (ie instanceof SpecialInvokeExpr && ie.getMethod().toString().contains("init") && sm.toString().contains("test.")) {
                             System.out.println("------special invoke-------" + ie.toString());
                             SpecialInvokeExpr sie = (SpecialInvokeExpr) ie;
                             //System.out.println("=======sie string===="+ sie.toString()+ " ====it's args' length" + sie.getBase().toString()+ "; "+ sie.getArgs().size());
