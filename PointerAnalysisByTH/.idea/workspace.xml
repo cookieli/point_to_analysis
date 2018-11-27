@@ -3,21 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7234837a-8a60-4455-b49c-43d1864b6a83" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/core/AllClassesWithFields.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/AllClassesWithFields.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/core/Anderson.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/Anderson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/core/AssignConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/AssignConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/core/ClassFields.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/ClassFields.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/core/NewConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/NewConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/core/WholeProgramTransformer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/result.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sootOutput/test/FieldSensitivity_complety.class" beforeDir="false" afterPath="$PROJECT_DIR$/sootOutput/test/FieldSensitivity_complety.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sootOutput/test/Hello.class" beforeDir="false" afterPath="$PROJECT_DIR$/sootOutput/test/Hello.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/Anderson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Anderson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/WholeProgramTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/test/FieldSensitivity_complety.class" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/FieldSensitivity_complety.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../code/test/FieldSensitivity_complety.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/FieldSensitivity_complety.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/test/Hello.class" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/Hello.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/test/Hello.java" beforeDir="false" afterPath="$PROJECT_DIR$/../code/test/Hello.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,13 +44,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="10708" />
+          <entry key="JAVA" value="10709" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="10708" />
+          <entry key="java" value="10709" />
         </counts>
       </usages-collector>
     </session>
@@ -71,15 +60,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="171" column="5" lean-forward="true" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
+            <state relative-caret-position="309">
+              <caret line="194" column="54" selection-start-line="194" selection-start-column="54" selection-end-line="194" selection-end-column="55" />
               <folding>
-                <element signature="e#837#838#0" expanded="true" />
-                <element signature="e#873#874#0" expanded="true" />
-                <element signature="e#2135#2136#0" expanded="true" />
-                <element signature="e#2158#2159#0" expanded="true" />
-                <element signature="e#3980#3981#0" expanded="true" />
-                <element signature="e#4003#4004#0" expanded="true" />
+                <element signature="e#890#891#0" expanded="true" />
+                <element signature="e#926#927#0" expanded="true" />
+                <element signature="e#1431#1432#0" expanded="true" />
+                <element signature="e#1466#1467#0" expanded="true" />
+                <element signature="e#2297#2298#0" expanded="true" />
+                <element signature="e#2336#2337#0" expanded="true" />
+                <element signature="e#2689#2707#0" expanded="true" />
+                <element signature="e#2773#2788#0" expanded="true" />
+                <element signature="e#3423#3448#0" expanded="true" />
+                <element signature="e#3560#3561#0" expanded="true" />
+                <element signature="e#3623#3624#0" expanded="true" />
+                <element signature="e#3804#3805#0" expanded="true" />
+                <element signature="e#3862#3863#0" expanded="true" />
+                <element signature="e#4040#4041#0" expanded="true" />
+                <element signature="e#4074#4075#0" expanded="true" />
+                <element signature="e#4118#4119#0" expanded="true" />
+                <element signature="e#4161#4162#0" expanded="true" />
                 <element signature="e#5650#5651#0" expanded="true" />
                 <element signature="e#5678#5679#0" expanded="true" />
               </folding>
@@ -108,8 +108,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="206" column="156" lean-forward="true" selection-start-line="206" selection-start-column="156" selection-end-line="206" selection-end-column="156" />
+            <state relative-caret-position="-133">
+              <caret line="41" column="107" lean-forward="true" selection-start-line="41" selection-start-column="107" selection-end-line="41" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -184,7 +184,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543318603199" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543320294979" />
     <property name="last_opened_file_path" value="$USER_HOME$/ics_lab/iotmiddle" />
   </component>
   <component name="RunDashboard">
@@ -203,7 +203,7 @@
     <configuration name="MyPointerAnalysis" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="core.MyPointerAnalysis" />
       <module name="PointerAnalysisByTH" />
-      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../code test.FieldSensitivity_complety" />
+      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../code test.Hello" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="core.*" />
@@ -359,15 +359,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Anderson.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="171" column="5" lean-forward="true" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
+        <state relative-caret-position="309">
+          <caret line="194" column="54" selection-start-line="194" selection-start-column="54" selection-end-line="194" selection-end-column="55" />
           <folding>
-            <element signature="e#837#838#0" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#2135#2136#0" expanded="true" />
-            <element signature="e#2158#2159#0" expanded="true" />
-            <element signature="e#3980#3981#0" expanded="true" />
-            <element signature="e#4003#4004#0" expanded="true" />
+            <element signature="e#890#891#0" expanded="true" />
+            <element signature="e#926#927#0" expanded="true" />
+            <element signature="e#1431#1432#0" expanded="true" />
+            <element signature="e#1466#1467#0" expanded="true" />
+            <element signature="e#2297#2298#0" expanded="true" />
+            <element signature="e#2336#2337#0" expanded="true" />
+            <element signature="e#2689#2707#0" expanded="true" />
+            <element signature="e#2773#2788#0" expanded="true" />
+            <element signature="e#3423#3448#0" expanded="true" />
+            <element signature="e#3560#3561#0" expanded="true" />
+            <element signature="e#3623#3624#0" expanded="true" />
+            <element signature="e#3804#3805#0" expanded="true" />
+            <element signature="e#3862#3863#0" expanded="true" />
+            <element signature="e#4040#4041#0" expanded="true" />
+            <element signature="e#4074#4075#0" expanded="true" />
+            <element signature="e#4118#4119#0" expanded="true" />
+            <element signature="e#4161#4162#0" expanded="true" />
             <element signature="e#5650#5651#0" expanded="true" />
             <element signature="e#5678#5679#0" expanded="true" />
           </folding>
@@ -376,8 +387,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/WholeProgramTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="206" column="156" lean-forward="true" selection-start-line="206" selection-start-column="156" selection-end-line="206" selection-end-column="156" />
+        <state relative-caret-position="-133">
+          <caret line="41" column="107" lean-forward="true" selection-start-line="41" selection-start-column="107" selection-end-line="41" selection-end-column="107" />
         </state>
       </provider>
     </entry>

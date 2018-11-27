@@ -20,6 +20,9 @@ public class A {
 	public B getF() {
 		return f;
 	}
+    public void putF(B f) {
+        this.f = f;
+    }
 	public B getH() {
 		return h;
 	}

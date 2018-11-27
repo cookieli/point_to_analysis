@@ -227,15 +227,16 @@ public class WholeProgramTransformer extends SceneTransformer {
                             if(sm.toString().contains("test.")) {
                                 Local Base = (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase();
                                 SootField field = ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getField();
-                                //anderson.addAssignConstraintFromClassFieldToClass(Base, field, (Local) ((DefinitionStmt) u).getLeftOp());
-                                if (anderson.classes.contains(Base, field)) {
+                                anderson.addAssignConstraintFromClassFieldToClass(Base, field, (Local) ((DefinitionStmt) u).getLeftOp());
+                                /*if (anderson.classes.contains(Base, field)) {
                                     HashSet<Local> t = anderson.classes.getFieldPointedTo(Base, field);
                                     for (Local e : t) {
                                         anderson.addAssignConstraint(e, (Local) ((DefinitionStmt) u).getLeftOp());
                                     }
                                 } else {
                                     throw new NullPointerException("can't find base: " + Base.toString() + " field: " + field.toString());
-                                }
+                                }*/
+                               //anderson.addAssignConstraintFromClassFieldToClass();
 
                             }
 

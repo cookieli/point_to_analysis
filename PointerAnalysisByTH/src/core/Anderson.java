@@ -179,7 +179,7 @@ public class Anderson {
 			throw new NullPointerException("tempToLocal don't have this Local" + temp.toString());
 		}
 		for(Local e: h){
-			this.classes.setClasseAndField(real, field, temp);
+			this.classes.setClasseAndField(real, field, e);
 		}
 	}
 
