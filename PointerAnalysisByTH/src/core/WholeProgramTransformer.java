@@ -85,6 +85,7 @@ public class WholeProgramTransformer extends SceneTransformer {
                         else if ((ie instanceof  SpecialInvokeExpr) && sm.toString().contains("test.") && ie.getArgs().size() > 0) {
                             //System.out.println(ie.getArgs().size()+" first into assign ");
                             //System.out.println("how assign method execute-----" + ie.getMethod().hasActiveBody());
+                            anderson.clearAssignParas();
                             for (int i = 0; i < ie.getArgs().size(); i++) {
                                 anderson.setAssignParameters((Local) ie.getArgs().get(i));
                             }
@@ -109,6 +110,60 @@ public class WholeProgramTransformer extends SceneTransformer {
                                             SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()).getField();
                                             anderson.getPointedFromTemp(leftOfReal, leftField, temp);
                                            // anderson.getPointedFromTemp(((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()),(Local) ((DefinitionStmt) sub).getRightOp());
+                                        }
+
+                                    }
+                                }
+                            }
+                        } else if(ie instanceof VirtualInvokeExpr && sm.toString().contains("test.")){
+                            if(ie.getMethod().hasActiveBody()){
+                                VirtualInvokeExpr vie = (VirtualInvokeExpr) ie;
+                                Local Base = (Local) vie.getBase();
+                                anderson.clearAssignParas();
+                                if(vie.getArgs().size() > 0){
+                                    for(int i = 0; i < vie.getArgs().size(); i++){
+                                        anderson.setAssignParameters((Local) vie.getArg(i));
+                                    }
+                                }
+                                for(Unit v: ie.getMethod().getActiveBody().getUnits()){
+                                    System.out.println("=======vie======"+v.toString());
+                                    if (v instanceof DefinitionStmt){
+                                        for (int i = 0; i < anderson.assignParameters.size(); i++) {// this loop means we can map parameters to real values
+                                            if(((DefinitionStmt) v).getRightOp().toString().contains("@this")){
+                                                anderson.mapParametersWithReal((Local)((DefinitionStmt) v).getLeftOp(), Base);
+                                            }
+                                            if (((DefinitionStmt) v).getRightOp().toString().contains("@parameter" + i)) {
+                                                anderson.mapParametersWithReal((Local) ((DefinitionStmt) v).getLeftOp(), i);
+                                            }
+                                            else if (((DefinitionStmt) v).getLeftOp().toString().contains("$") && ((DefinitionStmt) v).getRightOp() instanceof InstanceFieldRef) {
+                                                anderson.addTempPointTo(v);
+                                            }
+                                            else if (((DefinitionStmt) v).getRightOp().toString().contains("$") && ((DefinitionStmt) v).getLeftOp() instanceof InstanceFieldRef) {
+                                                Local temp = (Local) ((DefinitionStmt) v).getRightOp();
+                                                //Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
+                                                Local leftOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) v).getLeftOp()).getBase());
+                                                SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) v).getLeftOp()).getField();
+                                                anderson.getPointedFromTemp(leftOfReal, leftField, temp);
+                                                // anderson.getPointedFromTemp(((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()),(Local) ((DefinitionStmt) sub).getRightOp());
+                                            }
+                                            else if(((DefinitionStmt) v).getRightOp() instanceof Local && ((DefinitionStmt) v).getLeftOp() instanceof InstanceFieldRef){
+                                                System.out.println("it should be here");
+                                                Local leftOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) v).getLeftOp()).getBase());
+                                                SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) v).getLeftOp()).getField();
+                                                Local rightOfReal = anderson.assignLocalToReal.get(((DefinitionStmt) v).getRightOp());
+                                                anderson.classes.setClasseAndField(leftOfReal, leftField, rightOfReal);
+                                            }
+                                            else if(((DefinitionStmt) v).getLeftOp() instanceof Local && ((DefinitionStmt) v).getRightOp() instanceof InstanceFieldRef){
+                                                System.out.println("it should be here");
+                                                Local rightOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) v).getRightOp()).getBase());
+                                                SootField rightField = ((InstanceFieldRef) ((DefinitionStmt) v).getRightOp()).getField();
+                                                Local leftOfReal = anderson.assignLocalToReal.get(((DefinitionStmt) v).getLeftOp());
+                                                //anderson.classes.setClasseAndField(leftOfReal, leftField, rightOfReal);
+                                                HashSet<Local> temp = anderson.classes.getFieldPointedTo(rightOfReal, rightField);
+                                                for(Local e: temp){
+                                                    anderson.addAssignConstraint(e, leftOfReal);
+                                                }
+                                            }
                                         }
 
                                     }

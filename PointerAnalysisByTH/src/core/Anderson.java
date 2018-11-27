@@ -142,6 +142,9 @@ public class Anderson {
 	void setAssignParameters(Local parameter){
 		this.assignParameters.add(parameter);
 	}
+	void clearAssignParas(){
+		this.assignParameters.clear();
+	}
 	void getPointedFromTemp(Local real, Local temp){
 		HashSet<Local> h;
 		if(this.tempToLocal.containsKey(temp)) {

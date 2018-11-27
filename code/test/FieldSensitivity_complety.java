@@ -24,7 +24,7 @@ public class FieldSensitivity_complety{
         Benchmark.alloc(4);
         B e = new B();
         if(args.length > 1) {
-            c.f = e;
+            c.putF(e);
             c.g = b;
         }else{
             fs2.assign(a, c);
