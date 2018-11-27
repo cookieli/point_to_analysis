@@ -100,55 +100,22 @@ public class WholeProgramTransformer extends SceneTransformer {
                                             }
                                         }
                                         if (((DefinitionStmt) sub).getLeftOp().toString().contains("$") && ((DefinitionStmt) sub).getRightOp() instanceof InstanceFieldRef) {
-                                            //anderson.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase());
-                                                
-                                                /*for (Local e : anderson.fieldPointTo) {
-                                                    anderson.tempToLocal.put((Local) ((DefinitionStmt) sub).getLeftOp(), e);
-                                                }*/
-                                            HashSet<Local> temp = new HashSet<>();
-                                            Local rightOfLocal = (Local) ((InstanceFieldRef) ((DefinitionStmt) sub).getRightOp()).getBase();
-                                            SootField field = ((InstanceFieldRef) ((DefinitionStmt) sub).getRightOp()).getField();
-                                            Local rightOfReal = anderson.assignLocalToReal.get(rightOfLocal);
-                                            /*if (!anderson.classWithField.containsKey(rightOfReal)) {
-                                                //System.err.println("can't find "+ rightOfReal.toString()+ " field");
-                                                throw new NullPointerException("can't find " + rightOfReal.toString() + " field");
-                                            } else {
-                                                for (Local e : anderson.classWithField.get(rightOfReal)) {
-                                                    temp.add(e);
-                                                }
-                                                anderson.tempToLocal.put((Local) ((DefinitionStmt) sub).getLeftOp(), temp);
-                                            }*/
-                                            if (!anderson.classes.contains(rightOfReal, field)){
-                                                throw new NullPointerException("can't find" + rightOfReal.toString() + "field " + field.toString());
-                                            } else {
-                                                for(Local e: anderson.classes.getFieldPointedTo(rightOfReal, field)){
-                                                    temp.add(e);
-                                                }
-                                                anderson.tempToLocal.put((Local) ((DefinitionStmt) sub).getLeftOp(), temp);
-                                            }
+                                            anderson.addTempPointTo(sub);
                                         }
                                         if (((DefinitionStmt) sub).getRightOp().toString().contains("$") && ((DefinitionStmt) sub).getLeftOp() instanceof InstanceFieldRef) {
-                                            HashSet<Local> temp = anderson.tempToLocal.get((Local) ((DefinitionStmt) sub).getRightOp());
+                                            Local temp = (Local) ((DefinitionStmt) sub).getRightOp();
                                             //Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
                                             Local leftOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()).getBase());
                                             SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()).getField();
-                                            //anderson.addAssignConstraint(rightTempOfReal, leftTempOfReal);
-                                            //anderson.fieldPointTo.add(rightTempOfReal);
-                                            /*if (!anderson.classWithField.containsKey(leftOfReal)) {
-                                                anderson.classWithField.put(leftOfReal, temp);
-                                            } else {
-                                                anderson.classWithField.get(leftOfReal).addAll(temp);
-                                            }*/
-                                            for(Local e: temp){
-                                                anderson.classes.setClasseAndField(leftOfReal, leftField, e);
-                                            }
+                                            anderson.getPointedFromTemp(leftOfReal, leftField, temp);
+                                           // anderson.getPointedFromTemp(((InstanceFieldRef) ((DefinitionStmt) sub).getLeftOp()),(Local) ((DefinitionStmt) sub).getRightOp());
                                         }
 
                                     }
                                 }
                             }
                         }
-                        
+
                         if (ie.getMethod().toString().equals("<benchmark.internal.Benchmark: void alloc(int)>")) {
                             allocId = ((IntConstant) ie.getArgs().get(0)).value;
                         }
@@ -159,6 +126,48 @@ public class WholeProgramTransformer extends SceneTransformer {
                         }
                     }
                     if (u instanceof DefinitionStmt) {
+
+                        if(((DefinitionStmt) u).getRightOp() instanceof VirtualInvokeExpr){
+                            if (sm.toString().contains("test.")){
+                                System.out.println("definitionStmt-------" + u.toString());
+                                VirtualInvokeExpr vie = (VirtualInvokeExpr) ((DefinitionStmt) u).getRightOp();
+                                Local Base = (Local) vie.getBase();
+                                SootMethod rsm = ((VirtualInvokeExpr) ((DefinitionStmt) u).getRightOp()).getMethod();
+                                if(rsm.hasActiveBody()){
+                                    for(Unit rSub: rsm.getActiveBody().getUnits()){
+                                        System.out.println("=======definition stmt unit======" + rSub.toString() );
+                                        if(rSub instanceof DefinitionStmt){
+                                            if(((DefinitionStmt) rSub).getRightOp().toString().contains("@this")){
+                                                anderson.mapParametersWithReal((Local)((DefinitionStmt) rSub).getLeftOp(), Base);
+                                            }
+                                            if(((DefinitionStmt) rSub).getLeftOp().toString().contains("$") && ((DefinitionStmt) rSub).getRightOp() instanceof InstanceFieldRef){
+                                                anderson.addTempPointTo(rSub);
+                                            }
+                                            if(((DefinitionStmt) rSub).getLeftOp() instanceof InstanceFieldRef && ((DefinitionStmt) rSub).getRightOp().toString().contains("$")){
+                                                Local temp = (Local) ((DefinitionStmt) rSub).getRightOp();
+                                                //Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
+                                                Local leftOfReal = anderson.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) rSub).getLeftOp()).getBase());
+                                                SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) rSub).getLeftOp()).getField();
+                                                anderson.getPointedFromTemp(leftOfReal, leftField, temp);
+                                            }
+
+                                        }
+                                        if(rSub instanceof ReturnStmt){
+                                            Local temp = (Local) ((ReturnStmt) rSub).getOp();
+                                            if(((DefinitionStmt) u).getLeftOp() instanceof Local){
+                                                anderson.getPointedFromTemp((Local) ((DefinitionStmt) u).getLeftOp(), temp);
+                                            }
+                                            if(((DefinitionStmt) u).getLeftOp() instanceof InstanceFieldRef) {
+                                                Local b = (Local)((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getBase();
+                                                SootField f = ((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getField();
+                                                anderson.getPointedFromTemp(b, f, temp);
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
 
                         if (((DefinitionStmt) u).getRightOp() instanceof NewExpr) {
                             //System.out.println("Alloc " + allocId);
@@ -204,7 +213,7 @@ public class WholeProgramTransformer extends SceneTransformer {
                             if(anderson.classes.contains(rightBase, rightField)){
                                 temp = anderson.classes.getFieldPointedTo(rightBase, rightField);
                                 for(Local e: temp){
-                                    anderson.classes.setClasseAndField(e, leftField, e);
+                                    anderson.classes.setClasseAndField(leftBase, leftField, e);
                                 }
                             }
                             else{
@@ -215,29 +224,21 @@ public class WholeProgramTransformer extends SceneTransformer {
                         }
 
                         if (((DefinitionStmt) u).getLeftOp() instanceof Local && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef) {
-                            if (sm.toString().contains("test.")) {
-                                //System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
-									/*System.out.println("method name:"+sm.toString());
-									System.out.println("=======InstanceFieldRef======"+u.toString()+"=========");
-									System.out.println("=====instanceField===="+((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()).toString() +"======");
-									System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());*/
-                                //anderson.addAssignConstraint(((Local)((InstanceFieldRef)((DefinitionStmt) u).getRightOp()).getBase()), (Local)((DefinitionStmt) u).getLeftOp());
-                                    /*for(Local e: anderson.fieldPointTo){
-                                        anderson.addAssignConstraint(e, (Local)((DefinitionStmt) u).getLeftOp());
-                                    }*/
+                            if(sm.toString().contains("test.")) {
                                 Local Base = (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase();
                                 SootField field = ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getField();
-                                if(anderson.classes.contains(Base, field)){
+                                //anderson.addAssignConstraintFromClassFieldToClass(Base, field, (Local) ((DefinitionStmt) u).getLeftOp());
+                                if (anderson.classes.contains(Base, field)) {
                                     HashSet<Local> t = anderson.classes.getFieldPointedTo(Base, field);
-                                    for(Local e: t){
+                                    for (Local e : t) {
                                         anderson.addAssignConstraint(e, (Local) ((DefinitionStmt) u).getLeftOp());
                                     }
-                                } else{
+                                } else {
                                     throw new NullPointerException("can't find base: " + Base.toString() + " field: " + field.toString());
                                 }
 
-
                             }
+
                         }
                     }
                 }

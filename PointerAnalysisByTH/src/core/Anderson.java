@@ -4,6 +4,8 @@ import java.util.*;
 
 import soot.Local;
 import soot.SootField;
+import soot.Unit;
+import soot.jimple.DefinitionStmt;
 import soot.jimple.InstanceFieldRef;
 
 class AssignConstraint {
@@ -134,12 +136,68 @@ public class Anderson {
 	void mapParametersWithReal(Local local, int parameter_id){
 		assignLocalToReal.put(local, assignParameters.get(parameter_id));
 	}
+	void mapParametersWithReal(Local a, Local b){
+		assignLocalToReal.put(a, b);
+	}
 	void setAssignParameters(Local parameter){
 		this.assignParameters.add(parameter);
 	}
+	void getPointedFromTemp(Local real, Local temp){
+		HashSet<Local> h;
+		if(this.tempToLocal.containsKey(temp)) {
+			h = this.tempToLocal.get(temp);
+		} else{
+			throw new NullPointerException("tempToLocal don't have this Local" + temp.toString());
+		}
+		for(Local e: h){
+			this.addAssignConstraint(e, real);
+		}
+	}
+
+	/*void getPointedFromTemp(InstanceFieldRef i, Local temp){
+		//Local rightTempOfReal = anderson.assignLocalToReal.get(temp);
+		Local leftOfReal = this.assignLocalToReal.get(((InstanceFieldRef) ((DefinitionStmt) i).getLeftOp()).getBase());
+		SootField leftField = ((InstanceFieldRef) ((DefinitionStmt) i).getLeftOp()).getField();
+		this.getPointedFromTemp(leftOfReal, leftField, temp);
+	}*/
+	void addAssignConstraintFromClassFieldToClass(Local from, SootField fromField, Local to){
+		if (this.classes.contains(from, fromField)) {
+			HashSet<Local> t = this.classes.getFieldPointedTo(from, fromField);
+			for (Local e : t) {
+				this.addAssignConstraint(e, to);
+			}
+		} else {
+			throw new NullPointerException("can't find base: " + from.toString() + " field: " + from.toString());
+		}
+	}
+
+	void getPointedFromTemp(Local real, SootField field, Local temp){
+		HashSet<Local> h;
+		if(this.tempToLocal.containsKey(temp)) {
+			h = this.tempToLocal.get(temp);
+		} else {
+			throw new NullPointerException("tempToLocal don't have this Local" + temp.toString());
+		}
+		for(Local e: h){
+			this.classes.setClasseAndField(real, field, temp);
+		}
+	}
 
 
-
+	void addTempPointTo(Unit u) {
+		HashSet<Local> temp = new HashSet<>();
+		Local rightOfLocal = (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase();
+		SootField field = ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getField();
+		Local rightOfReal = this.assignLocalToReal.get(rightOfLocal);
+		if (!this.classes.contains(rightOfReal, field)){
+			throw new NullPointerException("can't find" + rightOfReal.toString() + "field " + field.toString());
+		} else {
+			for(Local e: this.classes.getFieldPointedTo(rightOfReal, field)){
+				temp.add(e);
+			}
+			this.tempToLocal.put((Local) ((DefinitionStmt) u).getLeftOp(), temp);
+		}
+	}
 	void run() {
 		for (NewConstraint nc : newConstraintList) {
 			if (!pts.containsKey(nc.to)) {

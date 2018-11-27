@@ -42,10 +42,14 @@ public class FieldSensitivity_complety{
         B e = new B();
         if(args.length > 1) {
             c.f = e;
+            c.g = b;
         }else{
             fs2.assign(a, c);
+            c.g = e;
         }
         B d = c.f;
+        b = c.g;
         Benchmark.test(1, d);
+        Benchmark.test(2, b);
     }
 }

@@ -13,6 +13,7 @@ public class Hello {
     Benchmark.alloc(3);
     A c = new A();
     if (args.length > 1) a = b;
+    a = c;
     //if (args.length > 1) c = a;
     Benchmark.test(1, a);
     Benchmark.test(2, b);
