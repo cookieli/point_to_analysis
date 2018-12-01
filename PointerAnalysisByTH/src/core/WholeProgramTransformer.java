@@ -172,7 +172,10 @@ public class WholeProgramTransformer extends SceneTransformer {
                         }
 
                         if (ie.getMethod().toString().equals("<benchmark.internal.Benchmark: void alloc(int)>")) {
-                            allocId = ((IntConstant) ie.getArgs().get(0)).value;
+                            if(ie.getArgs().size() > 0)
+                                allocId = ((IntConstant) ie.getArgs().get(0)).value;
+                            else
+                                allocId = 0;
                         }
                         if (ie.getMethod().toString().equals("<benchmark.internal.Benchmark: void test(int,java.lang.Object)>")) {
                             Value v = ie.getArgs().get(1);
@@ -181,6 +184,10 @@ public class WholeProgramTransformer extends SceneTransformer {
                         }
                     }
                     if (u instanceof DefinitionStmt) {
+
+                        if(((DefinitionStmt) u).getRightOp() instanceof NewArrayExpr){
+                            anderson.addNewConstraint(allocId, (Local) ((DefinitionStmt) u).getLeftOp());
+                        }
 
                         if(((DefinitionStmt) u).getRightOp() instanceof VirtualInvokeExpr){
                             if (sm.toString().contains("test.")){
@@ -234,9 +241,84 @@ public class WholeProgramTransformer extends SceneTransformer {
                             new_Local = (Local) ((DefinitionStmt) u).getLeftOp();
 
                         }
+                        if(((DefinitionStmt) u).getLeftOp()  instanceof  ArrayRef && ((DefinitionStmt) u).getRightOp() instanceof Local) {
+                            if (sm.toString().contains("test.")) {
+                                System.out.println("==array assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
+                                //System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
+                            }
+                            Local base = (Local) ((ArrayRef)(((DefinitionStmt) u).getLeftOp())).getBase();
+                            if(anderson.classes.containsKey((Local) ((DefinitionStmt) u).getRightOp())){
+                                anderson.classes.assign((Local) ((DefinitionStmt) u).getRightOp(), base);
+                            }
+                            anderson.addAssignConstraint((Local) ((DefinitionStmt) u).getRightOp(), base);
+
+                        }
+                        if(((DefinitionStmt) u).getLeftOp() instanceof ArrayRef && ((DefinitionStmt) u).getRightOp() instanceof InstanceFieldRef){
+                            Local array_Base = (Local) ((ArrayRef)((DefinitionStmt) u).getLeftOp()).getBase();
+                            if(sm.toString().contains("test.")) {
+                                Local Base = (Local) ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getBase();
+                                SootField field = ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getField();
+                                anderson.addAssignConstraintFromClassFieldToClass(Base, field, array_Base);
+                                /*if (anderson.classes.contains(Base, field)) {
+                                    HashSet<Local> t = anderson.classes.getFieldPointedTo(Base, field);
+                                    for (Local e : t) {
+                                        anderson.addAssignConstraint(e, (Local) ((DefinitionStmt) u).getLeftOp());
+                                    }
+                                } else {
+                                    throw new NullPointerException("can't find base: " + Base.toString() + " field: " + field.toString());
+                                }*/
+                                //anderson.addAssignConstraintFromClassFieldToClass();
+
+                            }
+                        }
+                        if(((DefinitionStmt) u).getLeftOp() instanceof ArrayRef && ((DefinitionStmt) u).getRightOp() instanceof ArrayRef){
+                            Local leftBase = (Local) ((ArrayRef)((DefinitionStmt) u).getLeftOp()).getBase();
+                            Local rightBase = (Local) ((ArrayRef)((DefinitionStmt) u).getRightOp()).getBase();
+                            if(anderson.classes.containsKey(rightBase)){
+                                anderson.classes.assign(rightBase, leftBase);
+                            }
+                            anderson.addAssignConstraint(rightBase, leftBase);
+
+                        }
+
+                        if(((DefinitionStmt) u).getLeftOp() instanceof Local && ((DefinitionStmt) u).getRightOp() instanceof ArrayRef){
+                            Local leftBase = (Local) ((DefinitionStmt) u).getLeftOp();
+                            Local rightBase = (Local) ((ArrayRef)((DefinitionStmt) u).getRightOp()).getBase();
+                            if(anderson.classes.containsKey(rightBase)){
+                                anderson.classes.assign(rightBase, leftBase);
+                            }
+                            anderson.addAssignConstraint(rightBase, leftBase);
+
+                        }
+
+                        if(((DefinitionStmt) u).getLeftOp() instanceof InstanceFieldRef && ((DefinitionStmt) u).getRightOp() instanceof ArrayRef){
+                            Local left_Base = (Local) ((InstanceFieldRef)((DefinitionStmt) u).getLeftOp()).getBase();
+                            if(sm.toString().contains("test.")) {
+                                Local Base = (Local) ((ArrayRef) ((DefinitionStmt) u).getRightOp()).getBase();
+                                SootField field = ((InstanceFieldRef) ((DefinitionStmt) u).getRightOp()).getField();
+                                anderson.addAssignConstraintFromClassFieldToClass(Base, field, left_Base);
+                                /*if (anderson.classes.contains(Base, field)) {
+                                    HashSet<Local> t = anderson.classes.getFieldPointedTo(Base, field);
+                                    for (Local e : t) {
+                                        anderson.addAssignConstraint(e, (Local) ((DefinitionStmt) u).getLeftOp());
+                                    }
+                                } else {
+                                    throw new NullPointerException("can't find base: " + Base.toString() + " field: " + field.toString());
+                                }*/
+                                //anderson.addAssignConstraintFromClassFieldToClass();
+
+                            }
+                        }
+
+
+
+
+
+
+
                         if (((DefinitionStmt) u).getLeftOp() instanceof Local && ((DefinitionStmt) u).getRightOp() instanceof Local) {
                             if (sm.toString().contains("test.")) {
-                                //System.out.println("==local assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
+                                System.out.println("==local assign========"+"S: "+((DefinitionStmt) u).toString() + "==================");
                                 //System.out.println("right opr " + ((InstanceFieldRef)(((DefinitionStmt) u).getRightOp())).getField().getName());
                             }
                             /*if (anderson.classWithField.containsKey(((DefinitionStmt) u).getRightOp())) {
